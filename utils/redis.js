@@ -1,4 +1,4 @@
-import { createClient, print } from 'redis';
+import { createClient } from 'redis';
 
 /**
  * Represents an instance of a client
@@ -6,11 +6,10 @@ import { createClient, print } from 'redis';
  *
  */
 class RedisClient {
-
   /**
    * Initialzes a new redis client instance.
    */
-  constructor () {
+  constructor() {
     this.client = createClient();
     this.client.on('error', (err) => { console.log(err); });
   }
@@ -24,8 +23,8 @@ class RedisClient {
    * Otherwise false.
    *
    */
-  isAlive () {
-    return (this.client.connected)
+  isAlive() {
+    return (this.client.connected);
   }
 
   /**
@@ -39,11 +38,11 @@ class RedisClient {
    * for the given key.
    *
    */
-  async get (key) {
+  async get(key) {
     return (
-     new Promise((resolve) => {
-       this.client.get(key, (err, value) => resolve (value));
-     })
+      new Promise((resolve) => {
+        this.client.get(key, (err, value) => resolve(value));
+      })
     );
   }
 
@@ -60,7 +59,7 @@ class RedisClient {
    * for the new item to expire.
    *
    */
-  async set (key, value, duration) {
+  async set(key, value, duration) {
     await this.client.set(key, value, 'EX', duration);
   }
 
@@ -72,7 +71,7 @@ class RedisClient {
    * to remove.
    *
    */
-  async del (key) {
+  async del(key) {
     await this.client.del(key);
   }
 }
